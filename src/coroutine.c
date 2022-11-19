@@ -120,7 +120,7 @@ int coroutine_join(int crfd)
 int __cr_to_proc(struct context *context, int flags)
 {
     struct task_struct *task = task_of(context);
-    struct cr *cr = task->cr;
+    // struct cr *cr = task->cr;
 
     task->context.blocked = 0;
     switch (fork()) {

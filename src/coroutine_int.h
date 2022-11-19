@@ -9,7 +9,8 @@ typedef int (*job_t)(struct context *__context, void *args);
 /*
  * task_struct maintain the coroutine or task object.
  */
-struct task_struct {
+struct task_struct
+{
     /* job information */
     struct cr *cr;
     int tfd; /* task fd */
@@ -18,7 +19,8 @@ struct task_struct {
     struct context context; /* defined at context.h */
 
     /* default info */
-    struct {
+    struct
+    {
         struct rb_node node;
         long sum_exec_runtime;
         long exec_start;
@@ -40,9 +42,10 @@ struct task_struct {
 // Need to be power of two
 #define RINGBUFFER_SIZE 16
 
-struct rq {
+struct rq
+{
     unsigned int out, in; /* dequeue at out, enqueue  at in*/
-    unsigned int mask; /* the size is power of two, so mask will be size - 1 */
+    unsigned int mask;    /* the size is power of two, so mask will be size - 1 */
     struct task_struct *r[RINGBUFFER_SIZE];
 };
 
@@ -50,18 +53,30 @@ void rq_init(struct rq *rq);
 int rq_enqueue(struct rq *rq, struct task_struct *task);
 struct task_struct *rq_dequeue(struct rq *rq);
 
+struct stk
+{
+    unsigned int in;
+    unsigned int mask;
+    struct task_struct *s[RINGBUFFER_SIZE];
+};
+
+void stk_init(struct stk *stk);
+int stk_push(struct stk *stk, struct task_struct *task);
+struct task_struct *stk_pop(struct stk*stk);
+
 /* main data structure */
 
 #define MAX_CR_TABLE_SIZE 10
 
-struct cr {
-    unsigned long size; /* number of the task in this scheduler */
-    int crfd; /* coroutine fd number */
-    int flags; /* Which type of scheduler, FIFO or CFS */
+struct cr
+{
+    unsigned long size;          /* number of the task in this scheduler */
+    int crfd;                    /* coroutine fd number */
+    int flags;                   /* Which type of scheduler, FIFO or CFS */
     struct task_struct *current; /* the job currently working */
 
     /* scheduler - chose by the flags */
-    struct rq rq; /* FIFO */
+    struct rq rq;        /* FIFO */
     struct rb_root root; /* Default */
 
     /* sched operations */
@@ -70,7 +85,8 @@ struct cr {
     int (*put_prev_task)(struct cr *cr, struct task_struct *prev);
 };
 
-struct cr_struct {
+struct cr_struct
+{
     int size;
     struct cr *table[MAX_CR_TABLE_SIZE];
 };

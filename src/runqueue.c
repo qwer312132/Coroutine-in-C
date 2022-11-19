@@ -31,12 +31,9 @@ int rq_enqueue(struct rq *rq, struct task_struct *task)
 struct task_struct *rq_dequeue(struct rq *rq)
 {
     struct task_struct *rev;
-
     if (rq->in == rq->out)
         return NULL;
-
     rev = rq->r[rq->out & rq->mask];
     rq->out++;
-
     return rev;
 }

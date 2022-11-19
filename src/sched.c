@@ -35,6 +35,11 @@ static inline int fifo_schedule(struct cr *cr, job_t func, void *args)
     return new_task->tfd;
 }
 
+// static inline int lifo_schecule(struct cr *cr, job_t func, void *args)
+// {
+
+// }
+
 static inline struct task_struct *fifo_pick_next_task(struct cr *cr)
 {
     return rq_dequeue(&cr->rq);
@@ -138,5 +143,11 @@ void sched_init(struct cr *cr)
         cr->schedule = fifo_schedule;
         cr->pick_next_task = fifo_pick_next_task;
         cr->put_prev_task = fifo_put_prev_task;
+    case CR_LIFO:
+    ;
+
+    default:
+    ;
     }
+
 }

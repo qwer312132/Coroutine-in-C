@@ -23,3 +23,7 @@ clean:
 rq:
 	$(CC) -o test test_fifo_runqueue.c $(LIB) $(CFLAG)
 
+rs:
+	$(CC) -o test test_lifo_runstack.c $(LIB) $(CFLAG)
+
+
