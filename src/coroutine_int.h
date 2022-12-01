@@ -78,7 +78,7 @@ struct cr
     /* scheduler - chose by the flags */
     struct rq rq;        /* FIFO */
     struct rb_root root; /* Default */
-
+    struct stk stk;
     /* sched operations */
     int (*schedule)(struct cr *cr, job_t func, void *args);
     struct task_struct *(*pick_next_task)(struct cr *cr);
